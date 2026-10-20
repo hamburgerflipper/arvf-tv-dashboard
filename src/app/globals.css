@@ -1,26 +1,93 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 1. Custom Theme Colors & Fonts */
+@theme {
+  --color-tv-text: #ffffff;
+  --color-tv-text-dim: #888888;
+  --color-tv-red: #dc2626;
+  --font-digital: "Digital-7", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 2. Custom Local Fonts */
+@font-face {
+  font-family: "Digital-7";
+  src: url("/fonts/digital-7.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 3. Global Resets & Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+  font-family: var(--font-jetbrains-mono), monospace;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Wallpaper support */
+.wallpaper-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.wallpaper-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.content-layer {
+  position: relative;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Card hover glow — Apple TV style */
+.app-card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.app-card:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.08),
+    0 0 60px rgba(255, 255, 255, 0.04);
+}
+
+/* Clock red glow */
+.clock-glow {
+  text-shadow: 0 0 20px rgba(220, 38, 38, 0.8),
+    0 0 40px rgba(220, 38, 38, 0.4),
+    0 0 80px rgba(220, 38, 38, 0.2);
+}
+
+/* Typing cursor */
+.cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background-color: #e0e0e0;
+  margin-left: 2px;
+  vertical-align: text-bottom;
 }
