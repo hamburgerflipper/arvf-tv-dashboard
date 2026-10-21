@@ -22,7 +22,7 @@ const apps: AppLink[] = [
   {
     name: "YouTube",
     url: "https://youtube.com",
-    icon: "/icons/youtube.PNG",
+    icon: "/icons/youtube.png",
   },
   {
     name: "Spotify",
@@ -35,9 +35,9 @@ const apps: AppLink[] = [
     icon: "/icons/lucha.jpg",
   },
     {
-    name: "FluxTV",
-    url: "https://watch-wrestling.eu/home-15/",
-    icon: "/icons/lucha.jpg",
+    name: "Cinejoy",
+    url: "https://cinejoy.pk/",
+    icon: "/icons/cinejoy.png",
   },
 ];
 
