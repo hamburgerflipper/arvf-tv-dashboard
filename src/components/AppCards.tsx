@@ -27,7 +27,7 @@ const apps: AppLink[] = [
   {
     name: "Spotify",
     url: "https://open.spotify.com",
-    icon: "/icons/spotify.jpg",
+    icon: "/icons/spotify.png",
   },
   {
     name: "WatchWrestling",
