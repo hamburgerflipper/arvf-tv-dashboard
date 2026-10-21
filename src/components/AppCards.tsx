@@ -32,7 +32,7 @@ const apps: AppLink[] = [
   {
     name: "WatchWrestling",
     url: "https://watch-wrestling.eu/home-15/",
-    icon: "/icons/lucha.jpg",
+    icon: "/icons/njpw.jpg",
   },
     {
     name: "Cinejoy",
