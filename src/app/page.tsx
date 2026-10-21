@@ -12,7 +12,7 @@ export default function Home() {
       {/* ── WALLPAPER BACKGROUND ── */}
       <div 
         className="wallpaper-bg" 
-        style={{ backgroundImage: "url('/wallpaper.jpg')" }} 
+        style={{ backgroundImage: "url('/spacex.jpg')" }} 
       />
       <div className="wallpaper-overlay" />
 
@@ -33,7 +33,7 @@ export default function Home() {
       </div>
 
       {/* ── BOTTOM ROW (App Dock) ── */}
-      <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10">
+      <div className="absolute bottom-5 left-0 right-0 flex justify-center z-10">
         <AppCards />
       </div>
     </main>

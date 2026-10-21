@@ -1,41 +1,67 @@
 import { NextResponse } from "next/server";
-// @ts-ignore
-import ical from "ical";
+import ical from "node-ical";
 
 export async function GET() {
-  const url = process.env.PROTON_CALENDAR_URL;
+  const calendarUrl = process.env.PROTON_CALENDAR_URL;
 
-  if (!url) {
-    return NextResponse.json({ error: "No calendar URL configured" }, { status: 400 });
+  if (!calendarUrl) {
+    return NextResponse.json({ events: [] });
   }
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
-    const data = await res.text();
-    const parsed = ical.parseICS(data);
+    // Fetch the raw iCal feed from Google Calendar
+    const response = await fetch(calendarUrl, { cache: "no-store" });
+    const icalText = await response.text();
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Parse the iCal feed
+    const parsedData = ical.parseICS(icalText);
 
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    // Get Start and End of TODAY in local time
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+    const endOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
 
-    const events = Object.values(parsed)
-      .filter((item: any) => item && item.type === "VEVENT" && item.start)
-      .map((event: any) => {
-        const start = new Date(event.start);
-        return {
-          summary: event.summary || "Untitled Event",
-          start: start.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-          startDate: start,
-        };
-      })
-      // Filter for events happening strictly today
-      .filter((event) => event.startDate >= today && event.startDate < tomorrow)
-      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+    const todayEvents: { summary: string; start: string; rawDate: Date }[] = [];
 
-    return NextResponse.json({ events });
+    for (const key in parsedData) {
+      const ev = parsedData[key];
+
+      if (ev.type === "VEVENT") {
+        const summary = ev.summary || "Untitled Event";
+        
+        // 1. Handle standard single events
+        if (ev.start) {
+          const eventStart = new Date(ev.start);
+
+          if (eventStart >= startOfToday && eventStart <= endOfToday) {
+            todayEvents.push({
+              summary,
+              start: eventStart.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              rawDate: eventStart,
+            });
+          }
+        }
+
+        // 2. Handle recurring events (if Google Calendar provides rrule)
+        if (ev.rrule) {
+          const recurrences = ev.rrule.between(startOfToday, endOfToday, true);
+          for (const date of recurrences) {
+            todayEvents.push({
+              summary,
+              start: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+              rawDate: date,
+            });
+          }
+        }
+      }
+    }
+
+    // Sort events chronologically (earliest first)
+    todayEvents.sort((a, b) => a.rawDate.getTime() - b.rawDate.getTime());
+
+    return NextResponse.json({ events: todayEvents });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to parse calendar" }, { status: 500 });
+    console.error("Calendar fetch error:", error);
+    return NextResponse.json({ events: [], error: "Failed to parse calendar" }, { status: 500 });
   }
 }

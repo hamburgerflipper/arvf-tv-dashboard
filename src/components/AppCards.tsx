@@ -17,7 +17,7 @@ const apps: AppLink[] = [
   {
     name: "SportsSurge",
     url: "https://isportsurge.ws/index9",
-    icon: "/icons/sportssurge.jpg",
+    icon: "/icons/am.png",
   },
   {
     name: "YouTube",
@@ -50,9 +50,9 @@ export default function AppCards() {
           href={app.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="app-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex flex-col items-center justify-center gap-3 w-30 h-30 cursor-pointer hover:bg-white/20 hover:border-white/40 transition-all duration-200 shadow-lg"
+          className="app-card bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-4 flex flex-col items-center justify-center  w-30 h-30 cursor-pointer hover:bg-white/20 hover:border-white/40 transition-all duration-200 shadow-lg"
         >
-          <div className="w-12 h-12 relative">
+          <div className="w-15 h-15 relative">
             <Image
               src={app.icon}
               alt={app.name}
@@ -61,7 +61,7 @@ export default function AppCards() {
             />
           </div>
           <span className="font-mono text-xs text-white/90 text-center leading-tight">
-            {app.name}
+            {/* {app.name} */} 
           </span>
         </a>
       ))}

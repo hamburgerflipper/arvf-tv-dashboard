@@ -24,7 +24,7 @@ export default function CalendarWidget() {
   }, []);
 
   return (
-    <div className="bg-tv-gray/50 backdrop-blur-sm rounded-2xl border border-white/5 p-6 w-full max-w-sm">
+    <div className="bg-tv-gray/50 backdrop-blur-sm border border-white/5 p-6 w-full max-w-sm">
       <h3 className="font-mono text-sm text-tv-text-dim uppercase tracking-widest mb-4">
         // today&apos;s schedule
       </h3>
