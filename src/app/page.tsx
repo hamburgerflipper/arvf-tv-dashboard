@@ -6,40 +6,36 @@ import AppCards from "@/components/AppCards";
 
 export default function Home() {
   return (
-    <>
-
+    <main className="relative w-screen h-screen overflow-hidden">
+      {/* Wallpaper overlay */}
+      <div className="wallpaper-overlay" />
       {/* ── WALLPAPER BACKGROUND ── */}
       <div 
         className="wallpaper-bg" 
         style={{ backgroundImage: "url('/wallpaper.jpg')" }} 
       />
-      {/* Wallpaper overlay */}
       <div className="wallpaper-overlay" />
-      {/* Main Container */}
-      <div className="content-layer flex flex-col justify-between p-12 md:p-16 max-w-7xl mx-auto w-full">
-        
-        {/* ── TOP ROW (Pushed down with mt-10 and side padding px-8) ── */}
-        <div className="w-full flex justify-between items-start mt-10 px-8">
-          <HelloGreeting />
-          <Weather />
-        </div>
 
-        {/* ── MIDDLE ROW ── */}
-        <div className="w-full flex-1 flex items-center justify-between px-4 gap-8">
-          <div className="flex-1 flex justify-center">
-            <Clock />
-          </div>
-          <div className="flex-1 flex justify-center">
-            <CalendarWidget />
-          </div>
-        </div>
-
-        {/* ── BOTTOM ROW ── */}
-        <div className="w-full pb-6 flex justify-center">
-          <AppCards />
-        </div>
-
+      {/* ── TOP ROW ── */}
+      <div className="absolute top-3 left-5 right-5 flex justify-between items-start z-10">
+        <HelloGreeting />
+        <Weather />
       </div>
-    </>
+
+      {/* ── MIDDLE ROW ── */}
+      <div className="absolute top-[47%] -translate-y-1/2 left-0 right-0 flex items-center justify-center gap-12 px-12 z-10">
+        <div className="flex-1 flex justify-center">
+          <Clock />
+        </div>
+        <div className="flex-1 flex justify-center">
+          <CalendarWidget />
+        </div>
+      </div>
+
+      {/* ── BOTTOM ROW (App Dock) ── */}
+      <div className="absolute bottom-3 left-0 right-0 flex justify-center z-10">
+        <AppCards />
+      </div>
+    </main>
   );
 }
